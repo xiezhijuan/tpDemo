@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 线下小留之家
+Source Server         : 小灰鸽线下
 Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : signing_blw
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-12-26 16:39:37
+Date: 2020-04-08 17:13:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,7 +35,7 @@ CREATE TABLE `admin` (
   `uid` varchar(120) DEFAULT NULL COMMENT '微信openid',
   PRIMARY KEY (`admin_id`) USING BTREE,
   KEY `admin_username` (`username`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='后台管理员';
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='后台管理员';
 
 -- ----------------------------
 -- Records of admin
@@ -54,7 +54,7 @@ CREATE TABLE `auth_group` (
   `rules` longtext COMMENT '规则',
   `addtime` int(11) NOT NULL COMMENT '添加时间',
   PRIMARY KEY (`group_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='管理员分组';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='管理员分组';
 
 -- ----------------------------
 -- Records of auth_group
@@ -82,14 +82,14 @@ CREATE TABLE `auth_rule` (
   `zt` int(1) DEFAULT NULL,
   `menustatus` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=333 DEFAULT CHARSET=utf8 COMMENT='权限节点';
+) ENGINE=MyISAM AUTO_INCREMENT=377 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='权限节点';
 
 -- ----------------------------
 -- Records of auth_rule
 -- ----------------------------
 INSERT INTO `auth_rule` VALUES ('1', 'System', '系统设置', '1', '1', '0', 'icon-cogs', '', '0', '0', '1446535750', '1', '1');
 INSERT INTO `auth_rule` VALUES ('2', 'System/system', '系统设置', '1', '1', '0', '', '', '1', '1', '1446535789', '1', '1');
-INSERT INTO `auth_rule` VALUES ('3', 'Database/database', '数据库管理', '1', '1', '0', 'icon-database', '', '0', '2', '1446535805', '1', '0');
+INSERT INTO `auth_rule` VALUES ('3', 'Database/database', '数据库管理', '1', '1', '0', 'icon-database', '', '0', '2', '1446535805', '1', '1');
 INSERT INTO `auth_rule` VALUES ('4', 'Database/restore', '还原数据库', '1', '1', '0', '', '', '3', '10', '1446535750', '1', '1');
 INSERT INTO `auth_rule` VALUES ('5', 'Database/database', '数据库备份', '1', '1', '0', '', '', '3', '1', '1446535834', '1', '1');
 INSERT INTO `auth_rule` VALUES ('15', 'Auth/adminList', '权限管理', '1', '1', '0', 'icon-lifebuoy', '', '0', '1', '1446535750', '1', '1');
@@ -132,6 +132,47 @@ INSERT INTO `auth_rule` VALUES ('245', 'Module/listOrder', '操作-排序', '1',
 INSERT INTO `auth_rule` VALUES ('246', 'Module/fieldDel', '操作-删除', '1', '1', '0', '', '', '241', '5', '1497426241', '0', '0');
 INSERT INTO `auth_rule` VALUES ('270', 'System/email', '邮箱配置', '1', '1', '0', '', '', '1', '2', '1502331829', '0', '1');
 INSERT INTO `auth_rule` VALUES ('287', 'Crud/index', '增删改查', '1', '1', '0', '', '', '189', '50', '1573280987', null, '1');
+INSERT INTO `auth_rule` VALUES ('333', 'Test', '系统模块管理', '1', '1', '0', '', '', '0', '50', '1577762471', null, '1');
+INSERT INTO `auth_rule` VALUES ('334', 'Test/index', '系统模块列表', '1', '1', '0', '', '', '333', '50', '1577762507', null, '1');
+INSERT INTO `auth_rule` VALUES ('335', 'Users', '用户', '1', '1', '0', '', '', '0', '50', '1578046238', null, '0');
+INSERT INTO `auth_rule` VALUES ('336', 'Users/index', 'index', '1', '1', '0', '', '', '335', '50', '1578046266', null, '1');
+INSERT INTO `auth_rule` VALUES ('337', 'Shuben', 'Shuben', '1', '1', '0', '', '', '0', '50', '1578367086', null, '0');
+INSERT INTO `auth_rule` VALUES ('338', 'Shuben/index', 'Shuben列表', '1', '1', '1', '', '', '337', '50', '1578367086', null, '1');
+INSERT INTO `auth_rule` VALUES ('339', 'Shuben/add', 'Shuben添加', '1', '1', '1', '', '', '337', '50', '1578367086', null, '1');
+INSERT INTO `auth_rule` VALUES ('340', 'Shuben/edit', 'Shuben编辑', '1', '1', '1', '', '', '337', '50', '1578367086', null, '1');
+INSERT INTO `auth_rule` VALUES ('346', 'Sysmodule/index', '系统权限2.0列表', '1', '1', '0', '', '', '345', '50', '1578382768', null, '1');
+INSERT INTO `auth_rule` VALUES ('347', 'Sysmodule/add', 'sysmodule添加', '1', '1', '0', '', '', '345', '50', '1578382768', null, '0');
+INSERT INTO `auth_rule` VALUES ('348', 'Sysmodule/edit', 'sysmodule编辑', '1', '1', '0', '', '', '345', '50', '1578382768', null, '0');
+INSERT INTO `auth_rule` VALUES ('345', 'Sysmodule', '系统权限2.0', '1', '1', '0', '', '', '0', '50', '1578382768', null, '1');
+INSERT INTO `auth_rule` VALUES ('365', 'Cs', 'Cs', '1', '1', '1', '', '', '0', '50', '1578455854', null, '1');
+INSERT INTO `auth_rule` VALUES ('366', 'Cs/index', 'Cs列表', '1', '1', '1', '', '', '365', '50', '1578455854', null, '1');
+INSERT INTO `auth_rule` VALUES ('367', 'Cs/add', 'Cs添加', '1', '1', '1', '', '', '365', '50', '1578455854', null, '0');
+INSERT INTO `auth_rule` VALUES ('368', 'Cs/edit', 'Cs编辑', '1', '1', '1', '', '', '365', '50', '1578455854', null, '0');
+INSERT INTO `auth_rule` VALUES ('369', 'Title', 'Title', '1', '1', '1', '', '', '0', '50', '1578724988', null, '1');
+INSERT INTO `auth_rule` VALUES ('370', 'Title/index', 'Title列表', '1', '1', '1', '', '', '369', '50', '1578724988', null, '1');
+INSERT INTO `auth_rule` VALUES ('371', 'Title/add', 'Title添加', '1', '1', '1', '', '', '369', '50', '1578724988', null, '1');
+INSERT INTO `auth_rule` VALUES ('372', 'Title/edit', 'Title编辑', '1', '1', '1', '', '', '369', '50', '1578724988', null, '1');
+INSERT INTO `auth_rule` VALUES ('373', 'Titless', 'Titless', '1', '1', '1', '', '', '0', '50', '1578725313', null, '1');
+INSERT INTO `auth_rule` VALUES ('374', 'Titless/index', 'Titless列表', '1', '1', '1', '', '', '373', '50', '1578725313', null, '1');
+INSERT INTO `auth_rule` VALUES ('375', 'Titless/add', 'Titless添加', '1', '1', '1', '', '', '373', '50', '1578725313', null, '1');
+INSERT INTO `auth_rule` VALUES ('376', 'Titless/edit', 'Titless编辑', '1', '1', '1', '', '', '373', '50', '1578725313', null, '1');
+
+-- ----------------------------
+-- Table structure for ban
+-- ----------------------------
+DROP TABLE IF EXISTS `ban`;
+CREATE TABLE `ban` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '默认' COMMENT '名称',
+  `users_id` varchar(100) NOT NULL DEFAULT '默认' COMMENT '关联1',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='表';
+
+-- ----------------------------
+-- Records of ban
+-- ----------------------------
+INSERT INTO `ban` VALUES ('1', 'ceo', '2');
+INSERT INTO `ban` VALUES ('2', '17611322825', '3');
 
 -- ----------------------------
 -- Table structure for category
@@ -168,7 +209,7 @@ CREATE TABLE `category` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `listorder` (`sort`) USING BTREE,
   KEY `pid` (`pid`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='栏目';
 
 -- ----------------------------
 -- Records of category
@@ -194,7 +235,7 @@ CREATE TABLE `config` (
   `inc_type` varchar(64) DEFAULT NULL COMMENT '配置分组',
   `desc` varchar(50) DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=90 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=90 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of config
@@ -233,6 +274,55 @@ INSERT INTO `config` VALUES ('88', 'email_id', 'CLTPHP官网', 'smtp', '0');
 INSERT INTO `config` VALUES ('89', 'test_eamil_info', ' 您好！这是一封来自CLTPHP的测试邮件！', 'smtp', '0');
 
 -- ----------------------------
+-- Table structure for css
+-- ----------------------------
+DROP TABLE IF EXISTS `css`;
+CREATE TABLE `css` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL DEFAULT '' COMMENT '城市名',
+  `img` varchar(255) DEFAULT NULL,
+  `manyImg` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='表';
+
+-- ----------------------------
+-- Records of css
+-- ----------------------------
+INSERT INTO `css` VALUES ('1', '1578672000', null, null);
+INSERT INTO `css` VALUES ('2', '1579795200', null, null);
+INSERT INTO `css` VALUES ('3', '1578412800', null, null);
+INSERT INTO `css` VALUES ('4', '1578412800', '/uploads/20200108/221e7242bd6ceaec4fd9a9c13f980a3a.jpg', '/uploads/20200108/fe6d0784463b8c74b3bf79c2f8de9148.jpg,/uploads/20200108/58a4b71db1008c09ea980efa7f5b1dd0.jpg');
+
+-- ----------------------------
+-- Table structure for demo
+-- ----------------------------
+DROP TABLE IF EXISTS `demo`;
+CREATE TABLE `demo` (
+  `demo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `demoName` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `desc` varchar(255) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
+  `edit` varchar(255) DEFAULT NULL COMMENT '富文本',
+  `bdedit` varchar(255) DEFAULT NULL COMMENT '百度富文本',
+  `img` varchar(255) DEFAULT NULL COMMENT '单图',
+  `manyImg` varchar(255) DEFAULT NULL COMMENT '多图',
+  `select` varchar(255) DEFAULT NULL COMMENT '下拉',
+  `manySelect` varchar(255) DEFAULT NULL COMMENT '多选下拉',
+  `test_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`demo_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of demo
+-- ----------------------------
+INSERT INTO `demo` VALUES ('1', '32453测试', '1', '这是测试数据', '1', null, null, null, null, '2,3', '5,4', null);
+INSERT INTO `demo` VALUES ('2', '测试名', '1', '测试描述324', '11', null, '1', null, null, '3', '4,5', null);
+INSERT INTO `demo` VALUES ('3', 'dsfsd', '2', '<p>dfdg</p>', '5', null, null, null, null, '3', '5,4', null);
+INSERT INTO `demo` VALUES ('4', '名称', '1', '<p><span style=\"text-align: center;\">layui富文本</span></p>', null, null, '<p><span style=\"font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 14px; text-align: center; background-color: rgb(251, 251, 251);\">百度分文本</span></p>', '/uploads/20200102/b23ba26076bce1a29046d1357e147505.jpg', '', '2,3', '5,4', null);
+INSERT INTO `demo` VALUES ('5', '名称', '1', '<p><span style=\"text-align: center;\">layui富文本</span></p>', null, null, '<p>百度分文本</p><p>自定义标题</p><p>段落格式</p><p>字体</p><p>字号</p><p>代码语言</p><p><br/></p>', '/uploads/20200102/a1b553f0710ed5e4f39b3ad9de6f9d69.jpg', '/uploads/20200102/5fc3093e32e150004b914f33ae41f944.jpg,/uploads/20200102/f36a76451776f4cd7d8ab9b8b8858082.jpg', '3', '4,5', null);
+
+-- ----------------------------
 -- Table structure for field
 -- ----------------------------
 DROP TABLE IF EXISTS `field`;
@@ -256,7 +346,7 @@ CREATE TABLE `field` (
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `issystem` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=161 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=161 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of field
@@ -340,6 +430,21 @@ INSERT INTO `field` VALUES ('76', '2', 'fromlink', '来源网址', '', '0', '0',
 INSERT INTO `field` VALUES ('160', '2', 'tags', '标签', '', '1', '0', '0', 'defaul', '', 'tags', 'text', 'array (\n  \'default\' => \'\',\n  \'ispassword\' => \'0\',\n  \'fieldtype\' => \'varchar\',\n)', '0', '', '5', '1', '0');
 
 -- ----------------------------
+-- Table structure for id
+-- ----------------------------
+DROP TABLE IF EXISTS `id`;
+CREATE TABLE `id` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '' COMMENT '城市名',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='css';
+
+-- ----------------------------
+-- Records of id
+-- ----------------------------
+INSERT INTO `id` VALUES ('1', '1578398824');
+
+-- ----------------------------
 -- Table structure for module
 -- ----------------------------
 DROP TABLE IF EXISTS `module`;
@@ -354,7 +459,7 @@ CREATE TABLE `module` (
   `sort` smallint(3) unsigned NOT NULL DEFAULT '0',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of module
@@ -375,7 +480,7 @@ CREATE TABLE `posid` (
   `name` varchar(40) NOT NULL DEFAULT '',
   `sort` tinyint(2) unsigned NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of posid
@@ -396,7 +501,7 @@ CREATE TABLE `role` (
   `sort` smallint(6) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `status` (`status`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of role
@@ -426,9 +531,150 @@ CREATE TABLE `system` (
   `mobile` varchar(10) DEFAULT 'open' COMMENT '是否开启手机端 open 开启 close 关闭',
   `code` varchar(10) DEFAULT 'close' COMMENT '是否开启验证码',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of system
 -- ----------------------------
 INSERT INTO `system` VALUES ('1', 'CLTPHP', 'http://cltdemo.test/', 'CLTPHP', 'CLTPHP,CLTPHP内容管理系统,php', 'CLTPHP内容管理系统，微信公众平台、APP移动应用设计、HTML5网站API定制开发。大型企业网站、个人博客论坛、手机网站定制开发。更高效、更快捷的进行定制开发。', '陕ICP备15008093号-3', '2015-2020', '西安市雁塔区', '18792402256', '1109305556@qq.com', '/uploads/20190305/0f33002431b9c35ad0c8f6be8834c064.png', 'open', 'open');
+
+-- ----------------------------
+-- Table structure for sys_module
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_module`;
+CREATE TABLE `sys_module` (
+  `sys_module_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '模块id',
+  `sys_module_name` varchar(50) CHARACTER SET utf8 NOT NULL COMMENT '模块名',
+  `sys_module_table` varchar(20) CHARACTER SET utf8 NOT NULL COMMENT '模块表',
+  `sys_module_detail` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT '模块应用描述简介',
+  `sys_module_add` varchar(20) CHARACTER SET utf8 DEFAULT NULL COMMENT '创建时间',
+  `sys_module_uid` int(10) unsigned DEFAULT NULL COMMENT '创建人',
+  `sys_module_update` varchar(20) CHARACTER SET utf8 DEFAULT NULL COMMENT '修改时间',
+  `sys_module_upuid` int(10) unsigned DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`sys_module_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='系统模块表';
+
+-- ----------------------------
+-- Records of sys_module
+-- ----------------------------
+INSERT INTO `sys_module` VALUES ('1', 'Cs', 'css', '测试项目', '1578388642', '1', '0', '0');
+INSERT INTO `sys_module` VALUES ('2', 'cs', 'css', '测试', '1578392871', '1', '0', '0');
+INSERT INTO `sys_module` VALUES ('3', 'cs', 'css', '测试', '1578392926', '1', '0', '0');
+INSERT INTO `sys_module` VALUES ('4', 'cs', 'css', '测试', '1578393591', '1', '0', '0');
+INSERT INTO `sys_module` VALUES ('5', 'Cs', 'css', '测试', '1578398787', '1', '0', '0');
+INSERT INTO `sys_module` VALUES ('6', 'Cs', 'css', '测试', '1578398988', '1', '0', '0');
+INSERT INTO `sys_module` VALUES ('7', 'Cs', 'css', '测试', '1578399134', '1', '0', '0');
+INSERT INTO `sys_module` VALUES ('8', 'Cs', 'css', '测试', '1578399149', '1', '0', '0');
+INSERT INTO `sys_module` VALUES ('9', 'Cs', 'id', 'css', '1578399421', '1', '0', '0');
+
+-- ----------------------------
+-- Table structure for sys_module_copy1
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_module_copy1`;
+CREATE TABLE `sys_module_copy1` (
+  `sys_module_id` int(10) unsigned NOT NULL COMMENT '模块id',
+  `sys_module_name` varchar(50) CHARACTER SET utf8 NOT NULL COMMENT '模块名',
+  `sys_module_table` varchar(20) CHARACTER SET utf8 NOT NULL COMMENT '模块表',
+  `sys_module_detail` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT '模块应用描述简介',
+  `sys_module_add` varchar(20) CHARACTER SET utf8 DEFAULT NULL COMMENT '创建时间',
+  `sys_module_uid` int(10) unsigned DEFAULT NULL COMMENT '创建人',
+  `sys_module_update` varchar(20) CHARACTER SET utf8 DEFAULT NULL COMMENT '修改时间',
+  `sys_module_upuid` int(10) unsigned DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`sys_module_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='系统模块表';
+
+-- ----------------------------
+-- Records of sys_module_copy1
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_view_copy1
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_view_copy1`;
+CREATE TABLE `sys_view_copy1` (
+  `sys_view_id` int(10) unsigned NOT NULL COMMENT '系统视图id',
+  `sys_view_name` varchar(30) DEFAULT NULL COMMENT '视图名称',
+  `sys_view_detail` varchar(255) DEFAULT NULL COMMENT '视图使用场景简介',
+  `sys_view_type` tinyint(1) unsigned DEFAULT NULL COMMENT '是否关联 0 关联 1 不关联',
+  `sys_view_module` varchar(20) DEFAULT NULL COMMENT '绑定的模块',
+  `sys_view_adduid` int(10) unsigned DEFAULT NULL COMMENT '创建人id',
+  `sys_view_addtime` varchar(20) DEFAULT NULL COMMENT '创建时间',
+  `sys_view_upuid` int(10) unsigned DEFAULT NULL COMMENT '修改人id',
+  `sys_view_uptime` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`sys_view_id`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_view_copy1
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for test
+-- ----------------------------
+DROP TABLE IF EXISTS `test`;
+CREATE TABLE `test` (
+  `test_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `dec` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT '1',
+  `sort` int(11) DEFAULT NULL,
+  PRIMARY KEY (`test_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of test
+-- ----------------------------
+INSERT INTO `test` VALUES ('1', '213', '2342', '1', '2');
+
+-- ----------------------------
+-- Table structure for test_title
+-- ----------------------------
+DROP TABLE IF EXISTS `test_title`;
+CREATE TABLE `test_title` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` text,
+  `sort` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL COMMENT '测试标题',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of test_title
+-- ----------------------------
+INSERT INTO `test_title` VALUES ('3', '{\"1\":\"个人简介\",\"2\":\"工作经验\",\"3\":\"项目经验\"}', '1', '1');
+
+-- ----------------------------
+-- Table structure for title_title
+-- ----------------------------
+DROP TABLE IF EXISTS `title_title`;
+CREATE TABLE `title_title` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT '1' COMMENT '状态: 1 开启/2 不开启',
+  `sort` int(11) DEFAULT NULL,
+  `add_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of title_title
+-- ----------------------------
+INSERT INTO `title_title` VALUES ('1', '个人简介', '1', '1', null);
+INSERT INTO `title_title` VALUES ('2', '工作经验', '1', '2', null);
+INSERT INTO `title_title` VALUES ('3', '项目经验', '1', '3', null);
+
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `user_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `userName` varchar(100) NOT NULL DEFAULT '默认' COMMENT '用户名',
+  `desc` varchar(100) NOT NULL DEFAULT '默认' COMMENT '描述',
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='表';
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+INSERT INTO `users` VALUES ('1', '2131', '23342');
