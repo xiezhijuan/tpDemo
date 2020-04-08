@@ -1,0 +1,95 @@
+{include file="common/head"/}
+
+<div class="admin-main layui-anim layui-anim-upbit" ng-app="hd" ng-controller="ctrl">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>修改</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane">
+        
+        
+    {volist name="title" id="item" key="i"}
+        <div class="layui-form-item">
+            <label class="layui-form-label"> {$item.name} </label>
+            <div class="layui-input-4">
+                <!-- <input type="text" name="contents" ng-model="field.contents" lay-verify="required"  class="layui-input"> -->
+                 <textarea placeholder="请输入{$item.name}" class="layui-textarea ng-pristine ng-valid ng-empty ng-touched" name="content[{$item.id}]">{$item.content}</textarea>
+            </div>
+        </div>
+     {/volist}
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"> 排序 </label>
+        <div class="layui-input-4">
+            <input type="text" name="sort" ng-model="field.sort" lay-verify="required"  class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-4">
+            <input type="radio" name="status" ng-model="field.status" ng-checked="field.status==1" ng-value="1" title="启用">
+            <input type="radio" name="status" ng-model="field.status" ng-checked="field.status==2" ng-value="2" title="未启用">
+        </div>
+    </div>
+
+        
+        
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">{:lang('submit')}</button>
+                <a href="{:url('index')}" class="layui-btn layui-btn-primary">{:lang('back')}</a>
+            </div>
+        </div>
+    </form>
+</div>
+{include file="common/foot"/}
+
+ 
+<script src="/static/common/js/angular.min.js"></script>
+<script>
+    
+      
+       
+    var m = angular.module('hd',[]);
+    m.controller('ctrl',function($scope) {
+        $scope.field = {$info|raw};
+        layui.use(['form','upload', 'layer','layedit'], function () {
+            var form = layui.form, layer = layui.layer,$= layui.jquery,upload = layui.upload,layedit = layui.layedit;
+             
+               
+             
+              
+             
+
+            form.on('submit(submit)', function (data) {
+
+                // 提交到方法 默认为本身
+                var loading = layer.load(1, {shade: [0.1, '#fff']});
+                data.field.id = $scope.field.id;
+                 //获取编辑器的内容
+                $.post("", data.field, function (res) {
+                    console.log(res);
+                    layer.close(loading);
+                    if (res.code > 0) {
+                        layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                            location.href = res.url;
+                        });
+                    } else {
+                        layer.msg(res.msg, {time: 1800, icon: 2});
+                    }
+                });
+            })
+
+
+               
+                
+        });
+    });
+
+
+   
+</script>
+</body>
+</html>

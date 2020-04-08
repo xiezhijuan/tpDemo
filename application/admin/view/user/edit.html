@@ -1,0 +1,159 @@
+{include file="common/head"/}
+<div class="admin-main layui-anim layui-anim-upbit" ng-app="hd" ng-controller="ctrl">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>{$title}</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane">
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">{:lang('sex')}</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="user_sex" ng-model="field.sex" ng-checked="field.user_sex==1" ng-value="1" title="{:lang('man')}">
+                    <input type="radio" name="user_sex" ng-model="field.sex" ng-checked="field.user_sex==2" ng-value="2" title="{:lang('woman')}">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">生日</label>
+            <div class="layui-input-4">
+<!--                <input type="text" name="birth_date" ng-model="field.birth_date"   class="layui-input" >-->
+                <input type="text"  id="birthDate" name="birth_date" ng-model="field.birth_date" lay-verify="required" placeholder="{:lang('pleaseEnter')}{:lang('birthdate')}" class="layui-input datalayui">
+            </div>
+        </div>
+         <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-4">
+                <input type="text" name="student_name" ng-model="field.student_name" lay-verify="required" placeholder="{:lang('pleaseEnter')}{:lang('studentname')}" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+<!--                必填：用于找回密码-->
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">学校</label>
+            <div class="layui-input-4">
+                <input type="text" name="school_name" ng-model="field.school_name" lay-verify="required" placeholder="{:lang('pleaseEnter')}{:lang('school')}" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+<!--                必填：用于找回密码-->
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">学校地址</label>
+            <div class="layui-input-4">
+                <input type="text" name="school_address" ng-model="field.school_address" lay-verify="required" placeholder="{:lang('pleaseEnter')}{:lang('address')}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">入读年级</label>
+            <div class="layui-input-4">
+                <input type="text" name="grade_Enrolled" ng-model="field.grade_Enrolled" lay-verify="required" placeholder="{:lang('pleaseEnter')}{:lang('grade')}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">入住日期</label>
+            <div class="layui-input-4">
+                <input type="text" id="theDate"  name="the_date" ng-model="field.the_date" lay-verify="required" placeholder="{:lang('pleaseEnter')}{:lang('thedate')}" class="layui-input datalayui">
+
+<!--                <input type="text" name="thedate" id="the_date" ng-model="field.the_date" lay-verify="required" placeholder="{:lang('pleaseEnter')}{:lang('the_date')}" class="layui-input">-->
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">入住期限</label>
+            <div class="layui-input-4">
+
+                <input type="radio" name="Check_deadlines" ng-model="field.Check_deadlines" ng-checked="field.Check_deadlines==1" ng-value="1" title="3个月">
+                <input type="radio" name="Check_deadlines" ng-model="field.Check_deadlines" ng-checked="field.Check_deadlines==2" ng-value="2" title="6个月">
+
+                <input type="radio" name="Check_deadlines" ng-model="field.Check_deadlines" ng-checked="field.Check_deadlines==3" ng-value="3" title="12个月">
+
+                <!--                <input type="text" name="Check_deadlines" ng-model="field.Check_deadlines" lay-verify="required" placeholder="{:lang('pleaseEnter')}{:lang('nickname')}" class="layui-input">-->
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">其他</label>
+            <div class="layui-input-4">
+                <input type="text" name="special_requirements" ng-model="field.special_requirements" lay-verify="" placeholder="{:lang('pleaseEnter')}{:lang('orther')}" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">类型需求</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="host_tyle" ng-model="field.host_tyle" ng-checked="field.host_tyle==1" ng-value="1" title="华人">
+                    <input type="radio" name="host_tyle" ng-model="field.host_tyle" ng-checked="field.host_tyle==2" ng-value="2" title="美国">
+                    <input type="radio" name="host_tyle" ng-model="field.host_tyle" ng-checked="field.host_tyle==3" ng-value="3" title="无所谓">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">{:lang('submit')}</button>
+                <a href="{:url('index')}" class="layui-btn layui-btn-primary">{:lang('back')}</a>
+            </div>
+        </div>
+    </form>
+</div>
+{include file="common/foot"/}
+<script src="/static/common/js/angular.min.js"></script>
+<script>
+
+    // layui.use('laydate', function(){
+    //     var laydate = layui.laydate;
+    //
+    //     //执行一个laydate实例
+    //     laydate.render({
+    //         elem: '.datalayui' //指定元素
+    //     });
+    //
+    // });
+    useLayDateMultiple('birthDate');
+    useLayDateMultiple('theDate');
+    function useLayDateMultiple(cls) {
+        layui.use('laydate', function() {
+            var laydate = layui.laydate;
+            lay('#' + cls).each(function() {
+                laydate.render({
+                    elem : this,
+                    trigger : 'click'
+                });
+            });
+        });
+    }
+
+    var m = angular.module('hd',[]);
+    m.controller('ctrl',function($scope) {
+        $scope.field = {$info|raw};
+        // $scope.group = {$user_level|raw};
+        // $scope.province = {$province|raw};
+        // $scope.city = {$city|raw};
+        // $scope.district = {$district|raw};
+        layui.use(['form', 'layer'], function () {
+            var form = layui.form, layer = layui.layer,$= layui.jquery;
+
+            form.on('submit(submit)', function (data) {
+
+                // 提交到方法 默认为本身
+                var loading = layer.load(1, {shade: [0.1, '#fff']});
+                data.field.host_user_id = $scope.field.host_user_id;
+                $.post("", data.field, function (res) {
+                    console.log(res);
+                    layer.close(loading);
+                    if (res.code > 0) {
+                        layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                            location.href = res.url;
+                        });
+                    } else {
+                        layer.msg(res.msg, {time: 1800, icon: 2});
+                    }
+                });
+            })
+        });
+    });
+</script>
+</body>
+</html>

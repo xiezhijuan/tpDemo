@@ -1,0 +1,257 @@
+{include file="common/head"/}
+<div class="admin-main layui-anim layui-anim-upbit" ng-app="hd" ng-controller="ctrl">
+    
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+      <legend>添加</legend>
+    </fieldset>
+
+    <form class="layui-form layui-form-pane">
+
+        <div class="layui-tab">
+          <ul class="layui-tab-title">
+            <li class="layui-this">模块名称</li>
+            <li>主键名称</li>
+            <li>字段名称</li>
+            <li>数据表</li>
+            <li>数据表备注</li>
+          </ul>
+
+          <div class="layui-tab-content">
+
+            <div class="layui-tab-item layui-show">
+                 <div class="layui-form-item">
+                    <label class="layui-form-label">模块</label>
+                    <div class="layui-input-4">
+                        <input type="text" name="module" ng-model="field.module" lay-verify="required"  class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-tab-item">
+                 <div class="layui-form-item">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-4">
+                        <input type="text" name="major" ng-model="field.major" lay-verify="required"  class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-tab-item Database">
+                <div class="layui-form-item" lay-filter="Database_add">
+                    <button type="button" class="layui-btn layui-btn-sm Database_add" ><i class="layui-icon"></i></button>
+                </div>
+
+                <div class="layui-form-item">
+                    <i>不需要填写主键</i>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">数据库字段名</label>
+                    <div class="layui-input-1">
+                        <input type="text" name="Database_en[1]" ng-model="field.Database_en[1]" lay-verify="required"  class="layui-input">
+                    </div>
+                    <label class="layui-form-label">前台展示中文</label>
+                    <div class="layui-input-1">
+                        <input type="text" name="Database_zh[1]" ng-model="field.Database_zh[1]" lay-verify="required"  class="layui-input">
+                    </div>
+                    <label class="layui-form-label">字段类型</label>
+                    <div class="layui-input-1">
+                        <select name="Database_type[1]">
+                          <option value="1" selected>文本框</option>
+                          <option value="2">单选</option>
+                          <option value="3">layui富文本</option>
+                          <option value="4">单图</option>
+                          <!-- <option value="5">下拉框</option> -->
+                          <option value="6">多图上传</option>
+                          <option value="7">百度富文本</option>
+                          <option value="8">多选下拉框</option>
+                          <option value="9">时间字段</option>
+                        </select>
+                    </div>
+                    <!-- <label class="layui-form-label">选择关联</label>
+                    <div class="layui-input-1">
+                        <select name="guanlian[1]">
+                          <option value="0" selected>不关联</option>
+                          <option value="1">其它表进行引用</option>
+                        </select>
+                    </div> -->
+                    <label class="layui-form-label" style="width: 130px;">下拉展示内容</label>
+                    <div class="layui-input-1">
+                        <input type="text" name="xiala_data[1]" ng-model="field.xiala_data[1]"  class="layui-input" placeholder="[1 => '狗',2 => '猫',3 => '鸟类',4 => '兔子',5 => '爬宠类',6 => '其他']">
+                    </div>
+                </div>
+
+            </div>
+            <div class="layui-tab-item">
+                 <div class="layui-form-item">
+                    <label class="layui-form-label">数据表</label>
+                    <div class="layui-input-4">
+                        <input type="text" name="Database" ng-model="field.Database" lay-verify="required"  class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-tab-item">
+                 <div class="layui-form-item">
+                    <label class="layui-form-label">数据表备注</label>
+                    <div class="layui-input-4">
+                        <input type="text" name="Database_detail" ng-model="field.Database_detail" lay-verify="required"  class="layui-input">
+                    </div>
+                </div>
+            </div>
+            
+          </div>
+        </div>
+
+       
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">{:lang('submit')}</button>
+                <a href="{:url('index')}" class="layui-btn layui-btn-primary">{:lang('back')}</a>
+            </div>
+        </div>
+
+    </form>
+</div>
+{include file="common/foot"/}
+<script src="/static/common/js/angular.min.js"></script>
+<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+<script>
+
+    var m = angular.module('hd',[]);
+    m.controller('ctrl',function($scope) {
+        layui.use(['form', 'layer'], function () {
+            var form = layui.form, layer = layui.layer,$= layui.jquery;
+            form.on('submit(submit)', function (data) {
+                
+                // 提交到方法 默认为本身
+                var loading = layer.load(1, {shade: [0.1, '#fff']});
+                console.log(data);
+
+                $.post("", data.field, function (res) {
+                    console.log(res);
+                    // layer.close(loading);
+                    if (res.status > 0) {
+                        layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                            location.href = res.url;
+                        });
+                    } else {
+                        layer.msg(res.msg, {time: 1800, icon: 2});
+                    }
+                });
+            })
+        });
+    });
+</script>
+
+<script>
+
+    layui.use('element', function(){
+      var $ = layui.jquery
+      ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+      
+      //触发事件
+      var active = {
+        tabAdd: function(){
+          //新增一个Tab项
+          element.tabAdd('demo', {
+            title: '新选项'+ (Math.random()*1000|0) //用于演示
+            ,content: '内容'+ (Math.random()*1000|0)
+            ,id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+          })
+        }
+        ,tabDelete: function(othis){
+          //删除指定Tab项
+          element.tabDelete('demo', '44'); //删除：“商品管理”
+          
+          
+          othis.addClass('layui-btn-disabled');
+        }
+        ,tabChange: function(){
+          //切换到指定Tab项
+          element.tabChange('demo', '22'); //切换到：用户管理
+        }
+      };
+      
+      $('.site-demo-active').on('click', function(){
+        var othis = $(this), type = othis.data('type');
+        active[type] ? active[type].call(this, othis) : '';
+      });
+      
+      //Hash地址的定位
+      var layid = location.hash.replace(/^#test=/, '');
+      element.tabChange('test', layid);
+      
+      element.on('tab(test)', function(elem){
+        location.hash = 'test='+ $(this).attr('lay-id');
+      });
+
+
+      $('.Database_add').on('click', function(){
+          var num = $('.Database .layui-form-item').length;
+              var d_str = '<div class="layui-form-item">';
+
+                    d_str +=  '<label class="layui-form-label">数据库字段名</label>';
+                   d_str +=    '<div class="layui-input-1">';
+                   d_str +=        '<input type="text" name="Database_en['+num+']" ng-model="field.Database_en['+num+']" lay-verify="required"  class="layui-input">';
+                   d_str +=    '</div>';
+
+                   d_str +=   '<label class="layui-form-label">前台展示中文</label>';
+                    d_str +=  '<div class="layui-input-1">';
+                   d_str +=        '<input type="text" name="Database_zh['+num+']" ng-model="field.Database_zh['+num+']" lay-verify="required"  class="layui-input">';
+                   d_str +=    '</div>';
+
+                    d_str +=   '<label class="layui-form-label">字段类型</label>';
+                      d_str +=   '<div class="layui-input-1">';
+                        d_str +=   '<select name="Database_type['+num+']">';
+                          d_str +=   '<option value="1" selected>文本框</option>';
+                          d_str +=   '<option value="2">单选</option>';
+                          d_str +=   '<option value="3">layui富文本</option>';
+                          d_str +=   '<option value="4">单图</option>';
+                          // d_str +=   '<option value="5">下拉框</option>';
+                          d_str +=   '<option value="6">多图上传</option>';
+                          d_str +=   '<option value="7">百度富文本</option>';
+                          d_str +=   '<option value="8">多选下拉框</option>';
+                          d_str +=   '<option value="9">时间字段</option>';
+                        d_str +=   '</select>';
+                      d_str +=   '</div>';
+
+                    // d_str +=   '<label class="layui-form-label">选择关联</label>';
+                    // d_str +=   '<div class="layui-input-1">';
+                    //   d_str +=   '<select name="guanlian['+num+']">';
+                    //     d_str +=   '<option value="0" selected>不关联</option>';
+                    //     d_str +=   '<option value="1">其它表进行引用</option>';
+                    //   d_str +=   '</select>';
+                    // d_str +=   '</div>';
+
+                   d_str +=   '<label class="layui-form-label">下拉内容</label>';
+                   d_str +=   '<div class="layui-input-1">';
+                    d_str +=   '<input type="text" name="xiala_data['+num+']" ng-model="field.xiala_data['+num+']"  class="layui-input">';
+                   d_str +=   '</div>';
+
+                   d_str +=    '<button type="button" class="layui-btn layui-btn-sm Database_del"><i class="layui-icon"></i></button>';
+                 d_str +=  '</div>';
+
+
+          $('.Database').append(d_str);
+
+          // 从新渲染 解决select  不显示问题 请勿删除
+          renderForm();
+          // 从新渲染 解决select  不显示问题 请勿删除
+       });
+      $('.Database').on('click','.Database_del',function(e){
+          $(this).parent().remove();
+
+      });
+    });
+
+
+    function renderForm(){
+
+        layui.use('form', function(){  //此段代码必不可少
+            var form = layui.form;
+            form.render();
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,392 @@
+
+<!-- 多图上传 -->
+<manyImg>
+    <div class="layui-form-item manyImg">
+        <label class="layui-form-label">多图上传</label>
+        <input type="hidden" name="?{{Database_en}}?" value="" id="?{{Database_en}}?">
+        <button type="button" class="layui-btn  layui-btn-primary" id="?{{Database_en}}?testList">
+            <i class="icon icon-upload3"></i>点击上传简历图片</button>
+        </button>
+        <div class="layui-upload-list">
+            <table class="layui-table" style="width: 50%;">
+                <thead>
+                    <tr>
+                        <th>图像</th>
+                        <th>状态</th>
+                        <th>操作</th></tr>
+                </thead>
+                <tbody id="?{{Database_en}}?demoList"></tbody>
+            </table>
+        </div>
+    </div>
+</manyImg>
+<!-- 多图上传js -->
+<manyImgJs>
+     //多文件列表示例
+      var ?{{Database_en}}?demoListView = $('#?{{Database_en}}?demoList')
+          ,uploadListIns = upload.render({
+            elem: '#?{{Database_en}}?testList'
+            ,url: '{:url("UpFiles/upload")}'
+            ,accept: 'file'
+            ,multiple: true
+            ,choose: function(obj){   
+              var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列 file.name
+              //读取本地文件
+              obj.preview(function(index, file, result){
+                var tr = $(['<tr id="upload-'+ index +'">'
+                  ,'<td><img src="'+result +'" ></td>'
+                  ,'<td>上传中</td>'
+                  ,'<td>'
+                    ,'<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
+                    ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                  ,'</td>'
+                ,'</tr>'].join(''));
+                
+                //单个重传
+                tr.find('.demo-reload').on('click', function(){
+                  obj.upload(index, file);
+                });
+                
+                //删除
+                tr.find('.demo-delete').on('click', function(){
+                  delete files[index]; //删除对应的文件
+                  tr.remove();
+                   multiple_images.splice(result, 1);
+                    //重新排序
+                    multiple_images.sort();
+                    $('#?{{Database_en}}?').val(multiple_images);
+                  uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                });
+                
+                ?{{Database_en}}?demoListView.append(tr);
+              });
+        }
+        ,done: function(res, index, upload){
+            console.log(res);
+              if(res.code == 1){ //上传成功
+                var tr = ?{{Database_en}}?demoListView.find('tr#upload-'+ index)
+                ,tds = tr.children();
+                tds.eq(1).html('<span style="color: #5FB878;">上传成功</span>');
+                 multiple_images.push(res.url);
+
+                 console.log(multiple_images);
+                $('#?{{Database_en}}?').val(multiple_images);
+                // tds.eq(3).html(''); //清空操作
+                return delete this.files[index]; //删除文件队列已经上传成功的文件
+              }
+                this.error(index, upload);
+            }
+        ,error: function(index, upload){
+              var tr = ?{{Database_en}}?demoListView.find('tr#upload-'+ index)
+              ,tds = tr.children();
+              tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+              tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+            }
+          });
+
+
+          
+
+</manyImgJs>
+
+
+
+<!-- 单图上传 -->
+<singleImg>
+    <div class="layui-form-item fieldName">  
+      <label class="layui-form-label">?{{Database_zh}}?</label> 
+      <input type="hidden" class="?{{Database_en}}?"  name="?{{Database_en}}?" >
+      <div class="layui-input-block"> 
+         <div class="layui-upload">
+           <button type="button" class="layui-btn layui-btn-primary uploadImg" ><i class="icon icon-upload3"></i>点击上传</button> 
+           <div class="layui-upload-list"> 
+              <img class="layui-upload-img" id="?{{Database_en}}?" >
+                <p class="demoText" ></p> 
+            </div>
+         </div> 
+      </div>
+  </div>
+</singleImg>
+<!-- 单图上传js -->
+<singleImgJs>
+    var uploadInst = upload.render({ 
+            elem: ".uploadImg" ,
+            url: "{:url("UpFiles/upload")}" ,
+            before: function(obj){
+              var _this = this;
+              obj.preview(function(index, file, result){
+                   _this.item.parents(".fieldName").find("img").attr("src",result)
+              });  
+            },
+            done: function(res){ 
+                if(res.code>0){ 
+                  this.item.parents(".fieldName").find("input[type=hidden]").val(res.url)
+                }else{ 
+                  return layer.msg("上传失败");
+                } 
+            } ,
+              error: function(res){ 
+                var demoText = this.item.parents(".fieldName").find(".demoText");
+                 demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');  
+                 demoText.find(".demo-reload").on("click", function(){  
+                  uploadInst.upload(); 
+                });
+              }
+        });
+
+</singleImgJs>
+
+<!-- 修改状态 -->
+<changeStatusJs>
+
+  form.on('switch(?{{status}}?)', function(obj){
+    loading =layer.load(1, {shade: [0.1,'#fff']});
+    var id = this.value;
+    var status = obj.elem.checked===true? 1:2;
+    $.post('{:url("updata")}',{'id':id, ?{{status}}? :status },function (res) {
+      layer.close(loading);
+      if (res.status==1) {    
+        location.reload();
+      }else{ 
+        layer.msg(res.msg,{time:1000,icon:2});    
+        return false;
+      }
+    }) 
+  });
+
+</changeStatusJs>
+
+
+<!-- 普通文本框 -->
+<divLable>
+    <div class="layui-form-item">
+        <label class="layui-form-label"> ?{{Database_zh}}? </label>
+        <div class="layui-input-4">
+            <input type="text" name="?{{Database_en}}?" ng-model="field.?{{Database_en}}?" lay-verify="required"  class="layui-input">
+        </div>
+    </div>
+</divLable>
+
+<!-- 单选文本 -->
+<divRedio>
+        <div class="layui-form-item">
+            <label class="layui-form-label">?{{Database_zh}}?</label>
+            <div class="layui-input-4">
+                <input type="radio" name="?{{Database_en}}?" checked ng-value="1" title="启用">
+                <input type="radio" name="?{{Database_en}}?"  ng-value="2" title="未启用">
+            </div>
+        </div>
+</divRedio>
+
+
+
+
+<!-- 单选框编辑 -->
+<divRedioEdit>
+    <div class="layui-form-item">
+        <label class="layui-form-label">?{{Database_zh}}?</label>
+        <div class="layui-input-4">
+            <input type="radio" name="?{{Database_en}}?" ng-model="field.?{{Database_en}}?" ng-checked="field.?{{Database_en}}?==1" ng-value="1" title="启用">
+            <input type="radio" name="?{{Database_en}}?" ng-model="field.?{{Database_en}}?" ng-checked="field.?{{Database_en}}?==2" ng-value="2" title="未启用">
+        </div>
+    </div>
+</divRedioEdit>
+<!-- -------------------------------------------------------------下拉框 -->
+<!-- 遍历下拉框 -->
+<phpForeach>
+
+    
+    $list['?{{Database_en}}?_array'] = ?{{Database_en_array}}?; 
+    $value['?{{Database_en}}?'] = $list['?{{Database_en}}?_array'][$value['?{{Database_en}}?']];
+
+</phpForeach>
+<!-- 遍历下拉框end -->
+
+<!--下拉框 -->
+<kindSelect>
+  <div class="layui-form-item"> 
+    <label class="layui-form-label">?{{Database_zh}}?</label> 
+    <div class="layui-input-4">
+      <select name="?{{Database_en}}?"  lay-filter="?{{Database_en}}?"  lay-verify="required"  xm-select="?{{Database_en}}?"  xm-select-search="" > 
+        <option  value="">请选择?{{Database_zh}}?</option> 
+        {foreach $?{{Database_en}}?_array as $key=> $val} 
+        <option value="{$key}" >{$val}</option>
+        {/foreach} 
+      </select> 
+    </div>
+  </div>
+</kindSelect>
+<!--下拉框结束 -->
+
+<!-- 编辑下拉框 -->
+<editSelect>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">?{{Database_zh}}?</label> 
+        <div class="layui-input-4">
+          <select name="?{{Database_en}}?"  lay-filter="?{{Database_en}}?" xm-select="?{{Database_en}}?"  xm-select-search=""   lay-verify="required" > 
+            <option value="">请选择?{{Database_zh}}?</option> 
+            {foreach $?{{Database_en}}?_array as $key=> $val} 
+              <option value="{$key}"  {if condition="in_array($key,$?{{Database_en}}?_arr)"}selected{/if}   >{$val}</option>
+          {/foreach} 
+        </select> 
+      </div> 
+    </div>
+</editSelect>
+<!-- 编辑下拉框结束 -->
+
+<!-- php视图传值 -->
+<selectAssign>
+    $list['?{{Database_en}}?_array'] = ?{{Database_en_array}}?; 
+    $this->assign('?{{Database_en}}?_array',$list['?{{Database_en}}?_array']);
+</selectAssign>
+<!-- php视图编辑传值 -->
+<selectAssignEdit>
+   $list['?{{Database_en}}?_array'] = ?{{Database_en_array}}?; 
+    $?{{Database_en}}?  = explode(',', $info['?{{Database_en}}?']);
+  $this->assign('?{{Database_en}}?_array',$list['?{{Database_en}}?_array']);
+  $this->assign('?{{Database_en}}?',$info['?{{Database_en}}?']);
+  $this->assign('?{{Database_en}}?_arr',$?{{Database_en}}?);
+</selectAssignEdit>
+
+
+
+
+<!-- 多选下拉框样式 -->
+<ManySelectCss>
+  <link href="/static/common/css/formSelects-v4.css" rel="stylesheet" />
+</ManySelectCss>
+<!-- 多选下拉框js -->
+<ManySelectJs>
+   layui.config({
+        base: '/static/common/js/' //此处路径请自行处理, 可以使用绝对路径
+    }).extend({
+        formSelects: 'formSelects-v4'
+    });
+</ManySelectJs>
+
+<!-- --------------------------------------------------------------------------------------下拉框结束 -->
+
+<!-- layui 自带富文本框 -->
+<layuitextarea>
+    <div class="layui-form-item">
+      <label class="layui-form-label">?{{Database_zh}}?</label>
+      <div class="layui-input-block">
+          <textarea class="layui-textarea" name="?{{Database_en}}?" ng-model="field.?{{Database_en}}?" lay-verify="" id="?{{Database_en}}?"></textarea>
+      </div>
+  </div>
+</layuitextarea>
+  
+
+
+<!-- 百度富文本 -->
+<divBaiduEditor>
+     <div class="layui-form-item">
+            <label class="layui-form-label">?{{Database_zh}}?</label>
+            <div class="controls layui-input-4" >
+                <textarea class="layui-textarea"  style=" width: 100%; display: none; "></textarea>
+                <script id="?{{Database_en}}?" name="?{{Database_en}}?" type="text/plain">?{{content}}?</script>
+            </div>
+        </div> 
+</divBaiduEditor>
+<!-- 百度富文本框下面 -->
+<BdEditorBtnJs>
+  
+  UE.getEditor('?{{Database_en}}?',{
+        initialFrameWidth : 1000,
+        initialFrameHeight: 600
+     });
+</BdEditorBtnJs>
+<!-- 百度富文本顶部 -->
+<BdEditorTopJs>
+  <script src="//unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
+  <script type="text/javascript" src="/static/ueditor/ueditor.all.js"></script> 
+</BdEditorTopJs>
+
+<BdPhpEdit>
+  $this->assign('?{{Database_en}}?',$info['?{{Database_en}}?']);
+</BdPhpEdit>
+
+<!-- 普通input框 -->
+<fieldinput>
+{field: '?{{Database_en}}?', title: '?{{Database_zh}}?', width: 100},
+</fieldinput>
+
+<!-- 单选 -->
+<changeStatusfield>
+{field: '?{{Database_en}}?', align: 'center',title: '?{{Database_zh}}?', width: 120,toolbar: '#?{{Database_en}}?'},
+</changeStatusfield>
+
+<!-- 状态 -->
+<changeStatusHtml>
+<script type="text/html" id="?{{Database_en}}?"><input type="checkbox" name="?{{Database_en}}?" value="{{d.?{{major}}?}}" lay-skin="switch" lay-text="启用|未启用" lay-filter="?{{Database_en}}?" {{ d.?{{Database_en}}? == 1 ? "checked" : "" }}></script>
+</changeStatusHtml>
+<!-- 图片 -->
+<changeimg>
+    <script type="text/html" id="?{{Database_en}}?">  <img src="{{d.?{{Database_en}}?}}" /></script>
+</changeimg>
+
+<!-- 单选 end -->
+
+<!-- 时间 -->
+<view-add-date>
+<div class="layui-form-item">
+  <label class="layui-form-label">?{{Database_zh}}?</label>
+  <div class="layui-input-inline">
+    <input type="text" id="?{{Database_en}}?" autocomplete="off" name="?{{Database_en}}?" value="{{d.?{{Database_en}}?}}" placeholder="" class="layui-input">
+  </div>
+</div>
+</view-add-date>
+<!-- 时间 end -->
+
+<!-- 时间 js -->
+<view-add-date-js>
+useLayDateMultiple('?{{Database_en}}?');
+</view-add-date-js>
+<!-- 时间 js end -->
+
+
+<!-- 时间 -->
+<view-edit-date>
+<div class="layui-form-item">
+  <label class="layui-form-label">?{{Database_zh}}?</label>
+  <div class="layui-input-inline">
+    <input type="text" id="?{{Database_en}}?" autocomplete="off" name="?{{Database_en}}?" value="{$?{{Database_en}}?}"  placeholder="" class="layui-input">
+  </div>
+</div>
+</view-edit-date>
+
+
+
+<!-- 控制器 start -->
+<con-date>
+              if(empty($value["?{{Database_en}}?"])){
+                $value["?{{Database_en}}?"] = '';
+              }else{
+                $value["?{{Database_en}}?"] = date('Y-m-d',$value["?{{Database_en}}?"]);
+              }
+</con-date>
+<con-add-date>
+              if(empty($data["?{{Database_en}}?"])){
+                $data["?{{Database_en}}?"] = time();
+              }else{
+                $data["?{{Database_en}}?"] = strtotime($data["?{{Database_en}}?"]);
+              }
+</con-add-date>
+<edit_for_list_data>
+              if(empty( $info["?{{Database_en}}?"] )){
+                 $?{{Database_en}}? = '';
+                 $this->assign("?{{Database_en}}?",$?{{Database_en}}?);
+              }else{
+                 $?{{Database_en}}? = date('Y-m-d',$info["?{{Database_en}}?"]);
+                 $this->assign("?{{Database_en}}?",$?{{Database_en}}?);
+              }
+</edit_for_list_data>
+
+
+
+
+
+
+
+

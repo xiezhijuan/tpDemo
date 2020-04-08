@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title></title>
+		<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="/static/invite/css/bootstrap-datetimepicker.min.css" />
+		<style type="text/css">
+			.hold-10{margin-top:10px;}
+			.hold-20{margin-top:20px;}
+			.hold-30{margin-top:30px;}
+			.btn{width:80%;margin:2% 0 0 10%;}
+			.navbar-brand>img{width:160px;}
+			.big{width:100%;height:1px;background:#fff;}
+		</style>
+	</head>
+ 
+	<body>
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#">
+		        <img alt="Brand" src="https://m.ixlzj.com/static/mindex/images/logo.png">
+		      </a>
+		    </div>
+		  </div>
+		</nav>
+		<div class="container">
+				<div class="form-group">
+					<label for="exampleInputEmail1">学生姓名</label>
+					<input type="text" class="form-control"  placeholder="您的姓名" name="student_name" value="">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputFile">性别</label>
+					<select class="form-control user_sex" name="user_sex">
+					  <option value="0">请选择</option>
+					  <option value="1">男</option>
+					  <option value="2">女</option>
+					</select> 
+				</div>
+				<!--出生日期-->
+				<div class="form-group">
+					<label for="exampleInputFile">出生日期</label>
+	                <div class='input-group date' id='datetimepicker1'>
+	                    <input type='text' class="form-control" name="birth_date" />
+	                    <span class="input-group-addon">
+	                        <span class="glyphicon glyphicon-calendar"></span>
+	                    </span>
+	                </div>
+	            </div>
+				<!--出生日期-->
+				<div class="form-group">
+					<label for="exampleInputPassword1">学校地址</label>
+					<input name="school_address" type="text" class="form-control" placeholder="学校地址">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">学校名称</label>
+					<input name="school_name" type="text" class="form-control" placeholder="学校名称">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">入读年级</label>
+					<input name="grade_Enrolled" type="text" class="form-control" placeholder="入读年级">
+				</div>
+				<!--入住日期-->
+				<div class="form-group">
+					<label for="exampleInputFile">入住日期</label>
+	                <div class='input-group date' id='datetimepicker2'>
+	                    <input type='text' class="form-control" name="the_date" />
+	                    <span class="input-group-addon">
+	                        <span class="glyphicon glyphicon-calendar"></span>
+	                    </span>
+	                </div>
+	            </div>
+				<!--入住日期-->
+				<div class="form-group">
+					<label for="exampleInputFile">入住期限</label>
+					<select class="form-control Check_deadlines" name="Check_deadlines">
+					  <option value="0">请选择</option>
+					  <option value="1">3个月</option>
+					  <option value="2">6个月</option>
+					  <option value="3">12个月</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="exampleInputFile">寄宿家庭类型要求</label>
+					<select class="form-control host_tyle" name="host_tyle">
+					  <option value="0">请选择</option>
+					  <option value="1">华人家庭</option>
+					  <option value="2">美国家庭</option>
+					  <option value="3">无所谓</option>
+					</select>
+				</div>
+				
+				<div class="hold-30"></div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">其他特殊需求</label>
+					<textarea name="special_requirements" class="form-control" rows="4"></textarea>
+				</div>
+				<button type="submit" class="btn btn-success" id="searchButton">提交匹配寄宿家庭</button>
+
+		</div>
+		<div class="hold-30 big"></div>
+		<div class="hold-30 big"></div>
+
+	</body> 
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="/static/invite/js/jquery-1.10.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="/static/invite/js/bootstrap-datetimepicker.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/invite/js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	$(function(){
+		$('#datetimepicker1').datetimepicker({
+		   format: "yyyy-mm-dd",
+	       autoclose: true,
+	       todayBtn: true,
+	       todayHighlight: true,
+	       showMeridian: true,
+	       pickerPosition: "bottom-left",
+	       language: 'zh-CN',//中文，需要引用zh-CN.js包
+	       startView:4,//月视图
+	       minView: 2//日期时间选择器所能够提供的最精确的时间选择视图
+		});
+		
+		$('#datetimepicker2').datetimepicker({
+			format: "yyyy-mm-dd",
+		    autoclose: true,
+		    todayBtn: true,
+		    todayHighlight: true,
+		    showMeridian: true,
+		    pickerPosition: "bottom-left",
+		    language: 'zh-CN',//中文，需要引用zh-CN.js包
+	        startView:3,//月视图
+	        minView: 2//日期时间选择器所能够提供的最精确的时间选择视图
+		});
+	});
+
+
+	// 提交代码
+	$('#searchButton').click(function(event) {
+
+		// 获取值
+			let input_array = {};
+			input_array.student_name = $("input[ name = 'student_name' ]").val();
+			input_array.user_sex = $('.user_sex option:selected').val();
+			input_array.birth_date = $("input[ name = 'birth_date' ]").val();
+			input_array.school_address = $("input[ name = 'school_address' ]").val();
+			input_array.school_name = $("input[ name = 'school_name' ]").val();
+			input_array.grade_Enrolled = $("input[ name = 'grade_Enrolled' ]").val();
+			input_array.the_date = $("input[ name = 'the_date' ]").val();
+			input_array.Check_deadlines = $('.Check_deadlines option:selected').val();
+			input_array.host_tyle = $('.host_tyle option:selected').val();
+			input_array.special_requirements = $("textarea[ name = 'special_requirements' ]").val();
+
+			let input_array_remind = {};
+			input_array_remind.student_name = "学生姓名不能为空";
+			input_array_remind.user_sex = "性别不能为空";
+			input_array_remind.birth_date = "出生日期不能为空";
+			input_array_remind.school_address = "学校地址不能为空";
+			input_array_remind.school_name = "学校名称不能为空";
+			input_array_remind.grade_Enrolled = "入读年级不能为空";
+			input_array_remind.the_date = "入住日期不能为空";
+			input_array_remind.Check_deadlines = "入住期限不能为空";
+			input_array_remind.host_tyle = "寄宿家庭类型要求不能为空";
+
+
+
+		//空  不合格
+			for (let key of Object.keys(input_array)) {
+				 let mealName = input_array[key];
+
+				 if (mealName == 0 && key !== 'special_requirements') {
+				 	alert(input_array_remind[key]);
+				 	return;
+				 }
+			}
+		// 提交
+
+		 $.ajax({  
+             type: "POST",  
+             url: "/home/index/invite",  
+             data: {data:input_array},
+             dataType: "json",  
+             success: function(data){  
+                if (data.code == 1) {
+                	alert(input_array_remind[data.msg]);
+				 	return;
+                }
+
+                if (data.code == 4) {
+                	alert(data.msg);
+				 	return;	
+                }
+
+                if (data.code == 2) {
+                	alert(data.msg);
+                	location.reload([false])
+				 	return;	
+                }
+              },
+             error:function(e){  
+                console.log(e);  
+             }  
+         });
+
+
+		
+
+	});
+		
+	</script>
+</html>

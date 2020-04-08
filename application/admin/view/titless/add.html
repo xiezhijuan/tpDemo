@@ -1,0 +1,91 @@
+{include file="common/head"/}
+ 
+<div class="admin-main layui-anim layui-anim-upbit" ng-app="hd" ng-controller="ctrl">
+    
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>添加</legend>
+    </fieldset>
+
+    <form class="layui-form layui-form-pane">
+
+        
+    <div class="layui-form-item">
+        <label class="layui-form-label"> 名称 </label>
+        <div class="layui-input-4">
+            <input type="text" name="name" ng-model="field.name" lay-verify="required"  class="layui-input">
+        </div>
+    </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-4">
+                <input type="radio" name="status" checked ng-value="1" title="启用">
+                <input type="radio" name="status"  ng-value="2" title="未启用">
+            </div>
+        </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"> 排序 </label>
+        <div class="layui-input-4">
+            <input type="text" name="sort" ng-model="field.sort" lay-verify="required"  class="layui-input">
+        </div>
+    </div>
+
+        
+          
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">{:lang('submit')}</button>
+                <a href="{:url('index')}" class="layui-btn layui-btn-primary">{:lang('back')}</a>
+            </div>
+        </div>
+    </form>
+</div>
+{include file="common/foot"/}
+
+<script src="/static/common/js/angular.min.js"></script>
+<script>
+    
+    
+    var m = angular.module('hd',[]);
+    
+    m.controller('ctrl',function($scope) {
+        layui.use(['form','upload', 'layer','layedit'], function () {
+             var form = layui.form, layer = layui.layer,$= layui.jquery,upload = layui.upload,layedit = layui.layedit;
+             
+              
+             
+            
+
+            form.on('submit(submit)', function (data) {
+                // 提交到方法 默认为本身
+                var loading = layer.load(1, {shade: [0.1, '#fff']});
+                
+                 //获取编辑器的内容
+
+                $.post("", data.field, function (res) {
+                    console.log(res);
+                    layer.close(loading);
+                    if (res.code > 0) {
+                        layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                            location.href = res.url;
+                        });
+                    } else {
+                        layer.msg(res.msg, {time: 1800, icon: 2});
+                    }
+                });
+            })
+
+            
+            
+
+        });
+    });
+
+
+
+   
+</script>
+</body>
+</html>
